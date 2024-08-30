@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="assign-subject-container">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">
+                    Assign Subject to Class
+                </legend>
+
+                <div>
+                    {{ form.class_.label(class="form-control-label") }}
+
+                    {% if form.class_.errors %}
+                        {{ form.class_(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.class_.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.class_(class="form-control") }}
+                    {% endif %}
+                </div>
+                <br>
+                <div>
+                    {{ form.subject.label(class="form-control-label") }}
+
+                    {% if form.subject.errors %}
+                        {{ form.subject(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.subject.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.subject(class="form-control") }}
+                    {% endif %}
+                </div>
+                <br>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,126 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="profile-page-container">
+        <div class="text-center mb-4">
+            <div class="image-wrapper">
+                <img id="profile-pic" class="rounded-circle" src="{{ image_file }}" alt="Profile Image">
+            </div>
+        </div>
+        <div class="text-center mb-4">
+            <h2 class="account-heading">{{ current_user.username }}</h2>
+            <p class="text-secondary font-weight-bold">{{ current_user.email }}</p>
+        </div>
+        <div class="content-section">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group" id="profile-form">
+                    <legend class="border-bottom mb-4">
+                        Account Information
+                    </legend>
+                    
+                    <div>
+                        {{ form.username.label(class="form-control-label") }}
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control form-control-lg is_invalid", readonly="readonly") }}
+                            <div class="invalid_feedback">
+                                {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.username(class="form-control form-control-lg", readonly="readonly") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        <br>
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-lg is_invalid", readonly="readonly") }}
+                            <div class="invalid_feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-lg", readonly="readonly") }}
+                        {% endif %}
+                    </div>
+                    <!-- Profile Picture Input (hidden by default) -->
+                    <div id="profile-pic-section" style="display: none;">
+                        <br>
+                        {{ form.picture.label(class="form-control-label") }}
+                        {{ form.picture(class="form-control-file", id="profile-pic-input") }}
+                    </div>
+                    <!-- Class Selection Dropdown (hidden by default) -->
+                    <div id="class-section" style="display: none;">
+                        <br>
+                        {{ form.class_.label(class="form-control-label") }}
+                        {{ form.class_(class="form-control form-control-lg", id="class-select") }}
+                    </div>
+
+                    <!-- Current Classes section -->
+                    <div class="form-control-label">
+                        <br> 
+                        Current Classes: 
+                        <ul>
+                            {% for class in current_user.classes %}
+                                <li>{{ class.class_code }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Submit and Cancel Buttons -->
+                    <div class="form-group mt-3">
+                        <button type="button" class="btn btn-secondary" id="edit-button">Edit</button>
+                        <button type="submit" class="btn btn-outline-info" id="submit-button" style="display: none;">Submit</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-button" style="display: none;">Cancel</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('edit-button').addEventListener('click', function() {
+            const formFields = document.querySelectorAll('#profile-form input');
+            formFields.forEach(field => {
+                field.removeAttribute('readonly');
+                field.removeAttribute('disabled'); // Enable the form fields
+            });
+
+            document.getElementById('profile-pic-section').style.display = 'block';
+            document.getElementById('class-section').style.display = 'block';
+            
+            document.getElementById('submit-button').style.display = 'inline-block';
+            document.getElementById('cancel-button').style.display = 'inline-block';
+            document.getElementById('edit-button').style.display = 'none';
+        });
+
+        document.getElementById('cancel-button').addEventListener('click', function() {
+            const formFields = document.querySelectorAll('#profile-form input');
+            formFields.forEach(field => {
+                field.setAttribute('readonly', 'readonly');
+                field.setAttribute('disabled', 'disabled'); // Disable the form fields
+            });
+
+            document.getElementById('profile-pic-section').style.display = 'none';
+            document.getElementById('class-section').style.display = 'none';
+            
+            document.getElementById('submit-button').style.display = 'none';
+            document.getElementById('cancel-button').style.display = 'none';
+            document.getElementById('edit-button').style.display = 'inline-block';
+        });
+
+        // Preview the selected image before upload
+        document.getElementById('profile-pic-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profile-pic').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+{% endblock content %}

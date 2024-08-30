@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="login-register-container">
+    <form method="POST" action="{{ url_for('add_video') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend>Upload Video</legend>
+            <div class="form-group">
+                <label for="video" class="form-control-label">Upload your video</label>
+                <input type="file" id="video" name="video" class="form-control" required>
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit Video</button>
+        </div>
+    </form>
+</div>
+<script>
+    let formModified = false;
+    
+    // Function to set formModified to true when form data changes
+    function setFormModified() {
+        formModified = true;
+    }
+    
+    // Add event listeners to form fields to detect changes
+    document.querySelectorAll('input, textarea').forEach(element => {
+        element.addEventListener('change', setFormModified);
+    });
+    
+    // Alert the user if they try to navigate away with unsaved changes
+    window.addEventListener('beforeunload', function (e) {
+        if (formModified) {
+            var confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+    
+            (e || window.event).returnValue = confirmationMessage; // For most browsers
+            return confirmationMessage; // For some older browsers
+        }
+    });
+    
+    // Function to clear session data and redirect
+    function handleBackNavigation() {
+        if (formModified) {
+            if (confirm('You have unsaved changes. Are you sure you want to leave? All changes will be lost.')) {
+                // Clear session data
+                fetch('/clear_session', {
+                    method: 'POST',
+                    credentials: 'same-origin'
+                }).then(() => {
+                    // Redirect to the desired page
+                    window.location.href = '/register_student';
+                });
+            }
+        }
+    }
+    
+    // Add event listener for back navigation or direct page access
+    window.addEventListener('popstate', handleBackNavigation);
+    </script>
+    
+{% endblock content %}

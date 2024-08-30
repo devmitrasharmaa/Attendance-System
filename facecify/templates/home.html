@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="shadow-container">
+    <div class="row content-wrapper">
+        <div class="col-lg-8 animated-collage-container">
+            <div class="animated-collage" id="animatedCollage">
+                <img src="{{ url_for('static', filename='images/image1.jpg') }}" alt="Image 1">
+                <img src="{{ url_for('static', filename='images/image2.jpeg') }}" alt="Image 2">
+                <img src="{{ url_for('static', filename='images/image3.jpeg') }}" alt="Image 3">
+                <img src="{{ url_for('static', filename='images/image4.png') }}" alt="Image 4">
+            </div>
+        </div>
+        <div class="col-lg-4 sidebar-content">
+            <div class="content-section">
+                <h3>Highest Attendance (%)</h3>
+                <p class="text-muted">No. of students present today.</p>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-light">CE C Sem 7</li>
+                    <li class="list-group-item list-group-item-light">BBA Sem 3</li>
+                    <li class="list-group-item list-group-item-light">CSE Sem 5</li>
+                    <li class="list-group-item list-group-item-light">CE A Sem 1</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

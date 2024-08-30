@@ -1,0 +1,61 @@
+    {% extends 'layout.html' %}
+    {% block content %}
+        <div class="login-register-container">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">
+                        Add Subject
+                    </legend>
+                    <div>
+                        {{ form.name.label(class="form-control-label") }}
+
+                        {% if form.name.errors %}
+                            {{ form.name(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.name.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.name(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ form.branch.label(class="form-control-label") }}
+
+                        {% if form.branch.errors %}
+                            {{ form.branch(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.branch.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.branch(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div>
+                        {{ form.subject_code.label(class="form-control-label") }}
+
+                        {% if form.subject_code.errors %}
+                            {{ form.subject_code(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.subject_code.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.subject_code(class="form-control") }}
+                        {% endif %}
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    {% endblock content %}

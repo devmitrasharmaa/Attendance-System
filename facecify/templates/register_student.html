@@ -1,0 +1,136 @@
+    {% extends 'layout.html' %}
+    {% block content %}
+    <div class="login-register-container">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend>Join Today</legend>
+                <div>
+                    {{ form.name.label(class="form-control-label") }}
+                    {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is_invalid") }}
+                    {% for error in form.name.errors %}
+                        <span class="invalid_feedback">
+                            {{ error }}
+                        </span>
+                    {% endfor %}
+                    {% else %}
+                    {{ form.name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.enrollment_number.label(class="form-control-label") }}
+                    {% if form.enrollment_number.errors %}
+                    {{ form.enrollment_number(class="form-control form-control-lg is_invalid") }}
+                        {% for error in form.enrollment_number.errors %}
+                            <span class="invalid_feedback">
+                                {{ error }}
+                            </span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.enrollment_number(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                    {{ form.email(class="form-control form-control-lg is_invalid") }} 
+                    <div class="invalid_feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            
+                <div>
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                    {{ form.password(class="form-control form-control-lg is_invalid") }}
+                        {% for error in form.password.errors %}
+                            <span class="invalid_feedback">
+                                {{ error }}
+                            </span>                        
+                        {% endfor %}
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.confirm_password.label(class="form-control-label") }}
+                    {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control form-control-lg is_invalid") }}
+                        {% for error in form.confirm_password.errors %}
+                            <span class="invalid_feedback">
+                                {{ error }}
+                            </span>                        
+                        {% endfor %}
+                    {% else %}
+                        {{ form.confirm_password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {{ form.class_.label(class="form-control-label") }}
+                    {% if form.class_.errors %}
+                    {{ form.class_(class="form-control form-control-lg is_invalid") }}
+                        {% for error in form.class_.errors %}
+                            <span class="invalid_feedback">
+                                {{ error }}
+                            </span>
+                        {% endfor %}
+                    {% else %}
+                        {{ form.class_(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    <script>
+        let formModified = false;
+        
+        // Function to set formModified to true when form data changes
+        function setFormModified() {
+            formModified = true;
+        }
+        
+        // Add event listeners to form fields to detect changes
+        document.querySelectorAll('input, textarea').forEach(element => {
+            element.addEventListener('change', setFormModified);
+        });
+        
+        // Alert the user if they try to navigate away with unsaved changes
+        window.addEventListener('beforeunload', function (e) {
+            if (formModified) {
+                var confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+        
+                (e || window.event).returnValue = confirmationMessage; // For most browsers
+                return confirmationMessage; // For some older browsers
+            }
+        });
+        
+        // Function to clear session data and redirect
+        function handleBackNavigation() {
+            if (formModified) {
+                if (confirm('You have unsaved changes. Are you sure you want to leave? All changes will be lost.')) {
+                    // Clear session data
+                    fetch('/clear_session', {
+                        method: 'POST',
+                        credentials: 'same-origin'
+                    }).then(() => {
+                        // Redirect to the desired page
+                        window.location.href = '/register_student';
+                    });
+                }
+            }
+        }
+        
+        // Add event listener for back navigation or direct page access
+        window.addEventListener('popstate', handleBackNavigation);
+        </script>
+        
+{% endblock content %}

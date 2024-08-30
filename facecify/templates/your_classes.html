@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="profile-page-container">
+    {% for class in current_user.classes %}
+        <h3>Class {{ loop.index }}: {{ class.class_code }}</h3>
+        <ul>
+            <li>Course: {{ class.course }}</li>
+            <li>Branch: {{ class.branch }}</li>
+            <li>Section: {{ class.section }}</li>
+            <li>Semester: {{ class.semester }}</li>
+        </ul>
+    {% endfor %}
+</div>
+{% endblock %}

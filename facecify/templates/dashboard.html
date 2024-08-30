@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="dashboard-container">
+        <div class="dashboard-item">
+            <a href="{{url_for('attendance')}}">
+                <img src="{{ url_for('static', filename='images/attendance.jpeg') }}" alt="Attendance Thumbnail">
+                <h4>Attendance</h4>
+            </a>
+        </div>
+        <div class="dashboard-item">
+            <a href="{{url_for('view_students')}}">
+                <img src="{{ url_for('static', filename='images/students.jpg') }}" alt="Attendance Thumbnail">
+                <h4>Students</h4>
+            </a>
+        </div>
+        <div class="dashboard-item">
+            <a href="{{url_for('your_classes')}}">
+                <img src="{{ url_for('static', filename='images/your_class.jpg') }}" alt="Your Classes Thumbnail">
+                <h4>Your Classes</h4>
+            </a>
+        </div>
+        <div class="dashboard-item">
+            <a href="{{ url_for('train_model') }}">
+                <img src="{{ url_for('static', filename='images/lectures.jpg') }}" alt="Training Model">
+                <h4>Train Models</h4>
+            </a>
+        </div>
+    </div>
+{% endblock content %}

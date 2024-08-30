@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="login-register-container">
+    <body>
+        <h3>Attendance</h3>
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.class_.label(class="form-control-label") }}
+                {{ form.class_(id="class_", class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.subject.label(class="form-control-label") }}
+                {{ form.subject(id="subject", class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.date.label(class="form-control-label") }}
+                {{ form.date(id="date", class="form-control") }}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Mark Attendance</button>
+            </div>
+        </form>
+    </body>
+</div>
+{% endblock %}
